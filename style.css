@@ -1,0 +1,248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.25), transparent 25%),
+      radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.15), transparent 20%),
+      linear-gradient(135deg, #cac3c8, #d094e6);
+    font-family: 'Leckerli One', cursive;
+    font-size: large;
+    color: #fff;
+}
+
+.floating-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Patterned rain layer: sits above floating-bg but beneath main content */
+.pattern-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0.12; /* lower opacity for subtle pattern */
+}
+
+.pattern-bg .raindrop {
+    position: absolute;
+    will-change: transform, opacity;
+    animation-name: rain-fall;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    opacity: 0.95;
+    max-width: 240px; /* cap raindrop size on larger screens */
+}
+
+.floating-bg .float {
+    position: absolute;
+    opacity: 0.85;
+    animation: float-bounce ease-in-out infinite;
+    transform-origin: center;
+}
+
+.floating-bg .float1 {
+    left: 8%;
+    top: 12%;
+    width: 230px;
+    animation-duration: 14s;
+    animation-delay: 0s;
+}
+
+.floating-bg .float2 {
+    left: 75%;
+    top: 10%;
+    width: 185px;
+    animation-duration: 16s;
+    animation-delay: 2s;
+}
+
+.floating-bg .float3 {
+    /* moved further right and slightly lower to avoid the main sticker */
+    left: 82%;
+    top: 72%;
+    width: 230px;
+    animation-duration: 18s;
+    animation-delay: 4s;
+}
+
+.floating-bg .float4 {
+    left: 18%;
+    top: 72%;
+    width: 200px;
+    animation-duration: 15s;
+    animation-delay: 1s;
+}
+
+.floating-bg .float5 {
+    left: 70%;
+    top: 45%;
+    width: 260px;
+    animation-duration: 17s;
+    animation-delay: 3s;
+}
+
+@keyframes float-bounce {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+        opacity: 0.85;
+    }
+    25% {
+        transform: translate3d(10px, -20px, 0) rotate(3deg);
+        opacity: 0.9;
+    }
+    50% {
+        transform: translate3d(-10px, 20px, 0) rotate(-3deg);
+        opacity: 0.75;
+    }
+    75% {
+        transform: translate3d(8px, -10px, 0) rotate(2deg);
+        opacity: 0.85;
+    }
+}
+
+.wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+h2 {
+    text-align: center;
+    font-size: 1.5em;
+    color: #e94d58;
+    margin: 15px 0;
+}
+
+.gif {
+    height: 100%;
+    width: 100%;
+}
+
+.btn-group {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+button {
+    position: fixed;
+    width: 150px;
+    height: inherit;
+    font-size: 1.2em;
+    color: white;
+    border-radius: 30px;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px gray;
+    border: 2px solid #e94d58;
+    z-index: 3;
+}
+
+/* Video overlay styles */
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.7);
+    z-index: 10000;
+    padding: 20px;
+}
+.video-overlay .video-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.video-overlay video {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+.video-overlay .video-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: #e94d58;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Let's Go button specific styling */
+.letsgo-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 56px;
+    margin: 0 8px;
+    font-size: 1.05rem;
+    background: #ff6b78;
+    color: #fff;
+    border-radius: 28px;
+    border: 2px solid #e94d58;
+    padding: 0 16px;
+    touch-action: manipulation;
+    z-index: 3;
+}
+
+button:nth-child(1) {
+    margin-left: -200px;
+    background: #e94d58;
+}
+
+button:nth-child(2) {
+    margin-right: -200px;
+    background: white;
+    color: #e94d58;
+}
+
+/* Responsive adjustments for small screens */
+@media (max-width: 600px) {
+    .floating-bg .float1 { left: 6%; top: 8%; width: 110px; }
+    .floating-bg .float2 { left: 70%; top: 6%; width: 95px; }
+    .floating-bg .float3 { left: 72%; top: 76%; width: 110px; }
+    .floating-bg .float4 { left: 10%; top: 74%; width: 100px; }
+    .floating-bg .float5 { left: 62%; top: 40%; width: 120px; }
+
+    .pattern-bg { opacity: 0.08; }
+    .pattern-bg .raindrop { max-width: 120px; }
+
+    /* Make letsgo button centered and large touch target */
+    .letsgo-btn {
+        position: relative;
+        width: 220px;
+        height: 56px;
+        display: block;
+        margin: 18px auto 0 auto;
+        font-size: 1.05rem;
+        border-radius: 30px;
+    }
+
+    button { width: 170px; }
+}
