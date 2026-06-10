@@ -251,3 +251,56 @@ const isMobile = window.innerWidth <= 600;
 const rainCount = isMobile ? 10 : 36;
 const sizeScale = isMobile ? 1 : 3;
 createRain(rainCount, sizeScale);
+
+// Background music: attempt autoplay, fall back to a play button if blocked
+(function setupBackgroundMusic() {
+  const audio = new Audio("assets/music.mp3");
+  audio.loop = true;
+  audio.preload = "auto";
+  audio.volume = 0.8;
+
+  function showPlayButton() {
+    if (document.getElementById("play-music-btn")) return;
+    const btn = document.createElement("button");
+    btn.id = "play-music-btn";
+    btn.textContent = "Play Music";
+    btn.className = "play-music-btn";
+    Object.assign(btn.style, {
+      position: "fixed",
+      right: "12px",
+      bottom: "12px",
+      zIndex: 10000,
+      padding: "8px 12px",
+      borderRadius: "6px",
+      background: "rgba(0,0,0,0.6)",
+      color: "#fff",
+      border: "none",
+      cursor: "pointer",
+    });
+    btn.addEventListener("click", () => {
+      audio.play().then(() => btn.remove()).catch(() => {});
+    });
+    document.body.appendChild(btn);
+  }
+
+  function tryPlay() {
+    audio.play().catch(() => {
+      showPlayButton();
+    });
+  }
+
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    tryPlay();
+  } else {
+    window.addEventListener("DOMContentLoaded", tryPlay);
+  }
+
+  // If user interacts with the page, try again (some browsers require interaction)
+  document.addEventListener(
+    "click",
+    () => {
+      if (audio.paused) tryPlay();
+    },
+    { once: true }
+  );
+})();
